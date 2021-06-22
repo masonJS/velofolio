@@ -1,6 +1,9 @@
+require('dotenv').config();
+
 const fsPromises = require('fs/promises')
 const path = require('path')
 const cliProgress = require('cli-progress')
+const axios = require('axios').default;
 const exec = require('child_process').exec
 
 const tickerDir = path.resolve(__dirname, 'tickers')
@@ -34,6 +37,45 @@ async function execCommand(command){
 }
 
 
+const API_TOKEN = process.env.API_TOKEN
+async function getHistoricalData({ticker, offset = 0, limit}){
+  const response = await axios.get('http://api.marketstack.com/v1/eod', {
+    params: {
+      access_key: API_TOKEN,
+      symbols: ticker,
+      date_from: '1985-01-01',
+      offset,
+      limit
+    }
+  })
+
+  return response.data;
+}
+
+async function getFullHistoricalData(ticker){
+  const limit = 50;
+  const firstData = await getHistoricalData({ticker, limit});
+  const data = []
+  data.push(...firstData.data);
+  while(data.length !== firstData.pagination.total){
+    const nextData = await  getHistoricalData({
+      ticker,
+      offset: data.length,
+      limit
+    })
+    data.push(...nextData.data)
+    // getFullHistoricalData(ticker)
+  }
+  return data;
+}
+
+async function doSomething(){
+  const data = await getFullHistoricalData('MSFT');
+  console.log(data.length)
+}
+
+doSomething()
+
 async function bulkSync() {
   const tickersGroup = await Promise.all(markets.map(parseTickers))
   const tickers = [].concat(...tickersGroup);
@@ -42,7 +84,8 @@ async function bulkSync() {
   for(let i = 0; i < tickers.length; i++){
 
     try{
-      await execCommand(`${scriptsDir} ${tickers[i]}`)
+      // await execCommand(`${scriptsDir} ${tickers[i]}`)
+      // @TODO
     } catch (e) {
       fsPromises.appendFile(errorsDir, `${tickers[i]}\n`, 'utf8')
     }
@@ -51,4 +94,4 @@ async function bulkSync() {
   }
 }
 
-bulkSync('AMEX')
+// bulkSync('AMEX')

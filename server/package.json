@@ -1,0 +1,22 @@
+{
+ "name": "velopolio-server",
+ "version": "0.0.1",
+ "description": "Awesome project developed with TypeORM.",
+ "devDependencies": {
+  "@types/node": "^8.0.29",
+  "ts-node": "^10.0.0",
+  "typescript": "^4.3.4"
+ },
+ "dependencies": {
+  "fastify": "^3.18.0",
+  "mysql": "^2.14.1",
+  "pino-pretty": "^5.0.2",
+  "reflect-metadata": "^0.1.10",
+  "ts-node-dev": "^1.1.6",
+  "typeorm": "0.2.34"
+ },
+ "scripts": {
+  "start": "ts-node src/index.ts | pino-pretty -c -t",
+  "start:dev": "ts-node-dev --respawn --transpile-only src/index.ts | pino-pretty"
+ }
+}
