@@ -15,7 +15,7 @@ export class SectorWeighting {
   @Column()
   sector: string
 
-  @Column({ type: 'decimal' })
+  @Column({ type: 'double' })
   percentage: number
 }
 
