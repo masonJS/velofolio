@@ -5,7 +5,7 @@ import {Backtest} from "./Backtest";
 @Entity({
   name: 'comment'
 })
-export class BacktestMeta {
+export class Comment {
   @PrimaryGeneratedColumn()
   id: number
 
