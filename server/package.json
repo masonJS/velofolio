@@ -9,6 +9,7 @@
  },
  "dependencies": {
   "axios": "^0.21.1",
+  "date-fns": "^2.22.1",
   "fastify": "^3.18.0",
   "mysql": "^2.14.1",
   "pino-pretty": "^5.0.2",
