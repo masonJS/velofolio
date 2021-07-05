@@ -16,7 +16,7 @@ export class StockMeta {
   @Column()
   is_tracking: boolean
 
-  @OneToOne(type => Stock, (stock) => stock.stockMeta, { cascade: true })
+  @OneToOne(type => Stock, (stock) => stock.stock_meta, { cascade: true })
   @JoinColumn({ name: 'stock_id'})
   stock: Stock
 }

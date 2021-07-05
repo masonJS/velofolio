@@ -1,5 +1,6 @@
-import {Entity, PrimaryGeneratedColumn, Column, OneToOne} from 'typeorm'
+import {Entity, PrimaryGeneratedColumn, Column, OneToOne, ManyToOne, JoinColumn} from 'typeorm'
 import { StockMeta } from './StockMeta'
+import {StockType} from "./StockType";
 @Entity({
   name: 'stocks'
 })
@@ -11,7 +12,7 @@ export class Stock{
     type: "varchar",
     length: 10
   })
-  symbol: string
+  ticker: string
 
   @Column({
     type: 'varchar',
@@ -32,6 +33,12 @@ export class Stock{
   is_etf: boolean
 
   @OneToOne(type => StockMeta, (stockMeta) => stockMeta.stock)
-  stockMeta: StockMeta
+  stock_meta: StockMeta
+
+  @ManyToOne(type => StockType, { cascade: true })
+  @JoinColumn({
+    name: 'stock_type_id'
+  })
+  stock_type: StockType
 
 }
