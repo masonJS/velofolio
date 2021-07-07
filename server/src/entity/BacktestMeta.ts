@@ -1,5 +1,12 @@
-import {Entity, PrimaryGeneratedColumn, JoinColumn, ManyToOne, Column, Index} from 'typeorm'
-import {Backtest} from "./Backtest";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  JoinColumn,
+  ManyToOne,
+  Column,
+  Index
+} from 'typeorm'
+import { Backtest } from "./Backtest";
 
 @Entity({
   name: 'backtest_meta'

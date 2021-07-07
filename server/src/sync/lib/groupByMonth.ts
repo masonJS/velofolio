@@ -1,5 +1,6 @@
 import { RawHistoricalPrice } from "../../finance-api/getHistoricalPrices";
 import { format } from 'date-fns'
+
 type MonthlyHistoricalPrice = {
   closeDate: string, // end date of month
   baseDate: string // yyyy-MM
@@ -9,8 +10,9 @@ type MonthlyHistoricalPrice = {
   close: number,
   adjustedClose: number
 }
+
 export function groupByMonth(historicalPrices: RawHistoricalPrice[]){
-  return historicalPrices.reduce((acc, current, i, array) => {
+  return historicalPrices.reduce((acc, current) => {
     const date = new Date(current.date)
     const baseDate = format(date, 'yyyy-MM')
     const priceInfo = acc.find(info => info.baseDate === baseDate)

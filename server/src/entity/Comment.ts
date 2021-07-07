@@ -1,6 +1,14 @@
-import {Entity, PrimaryGeneratedColumn, JoinColumn, ManyToOne, Column, Index, CreateDateColumn} from 'typeorm'
-import {User} from "./User";
-import {Backtest} from "./Backtest";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  JoinColumn,
+  ManyToOne,
+  Column,
+  Index,
+  CreateDateColumn
+} from 'typeorm'
+import { User } from "./User";
+import { Backtest } from "./Backtest";
 
 @Entity({
   name: 'comment'

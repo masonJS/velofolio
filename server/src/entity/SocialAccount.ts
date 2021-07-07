@@ -1,5 +1,11 @@
-import {Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn} from 'typeorm'
-import {User} from "./User";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToOne,
+  JoinColumn
+} from 'typeorm'
+import { User } from "./User";
 
 @Entity({
   name: 'social_accounts'

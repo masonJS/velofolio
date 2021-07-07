@@ -1,5 +1,5 @@
 import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn} from 'typeorm'
-import { Stock } from './Stock'
+import { Asset } from './Asset'
 @Entity({
   name: 'historical_prices'
 })
@@ -34,7 +34,7 @@ export class HistoricalPrice {
   @Column({ type: 'double' })
   volume: number
 
-  @ManyToOne(type => Stock, { cascade: true })
-  @JoinColumn({ name: 'stock_id'})
-  stock: Stock
+  @ManyToOne(type => Asset, { cascade: true })
+  @JoinColumn({ name: 'asset_id'})
+  asset: Asset
 }

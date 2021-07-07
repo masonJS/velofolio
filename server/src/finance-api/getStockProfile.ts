@@ -5,7 +5,6 @@ export async function getStockProfile(ticker: string){
   return response.data
 }
 
-
 export interface StockProfile{
 	symbol: string;
 	country: string;
