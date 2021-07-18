@@ -3,7 +3,8 @@ import {
   PrimaryGeneratedColumn,
   Column,
   OneToOne,
-  JoinColumn
+  JoinColumn,
+  Index
 } from 'typeorm'
 import { Asset } from './Asset'
 @Entity({
@@ -22,7 +23,11 @@ export class AssetMeta {
   @Column()
   is_tracking: boolean
 
-  @OneToOne((type) => Asset, (asset) => asset.asset_meta, { cascade: true })
+  @OneToOne((type) => Asset, (asset) => asset.asset_meta, { onDelete: 'CASCADE', cascade: true })
   @JoinColumn({ name: 'asset_id'})
   asset: Asset
+
+  @Index()
+  @Column({ type: 'double' })
+  changes: number
 }

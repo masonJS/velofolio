@@ -20,7 +20,7 @@ export class SocialAccount {
   @Column({ length: 255 })
   social_id: string
 
-  @OneToOne(type => User, { cascade: true })
+  @OneToOne(type => User, { onDelete: 'CASCADE' })
   @JoinColumn({ name: "user_id" })
   user: User
 }

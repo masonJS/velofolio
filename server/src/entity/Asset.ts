@@ -31,7 +31,7 @@ export class Asset{
   })
   description: string
 
-  @Column()
+  @Column({ nullable: true })
   sector: string
 
   @Column({ type: 'timestamp' })
@@ -46,7 +46,7 @@ export class Asset{
   @OneToOne((type) => AssetMeta, (assetMeta) => assetMeta.asset)
   asset_meta: AssetMeta
 
-  @ManyToOne((type) => AssetType, { cascade: true })
+  @ManyToOne((type) => AssetType, { onDelete: 'CASCADE' })
   @JoinColumn({
     name: 'asset_type_id'
   })

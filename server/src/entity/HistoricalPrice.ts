@@ -34,7 +34,7 @@ export class HistoricalPrice {
   @Column({ type: 'double' })
   volume: number
 
-  @ManyToOne(type => Asset, { cascade: true })
+  @ManyToOne(type => Asset, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'asset_id'})
   asset: Asset
 }

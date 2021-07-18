@@ -8,7 +8,8 @@ type MonthlyHistoricalPrice = {
   low: number,
   open: number,
   close: number,
-  adjustedClose: number
+  adjustedClose: number,
+  volume: number
 }
 
 export function groupByMonth(historicalPrices: RawHistoricalPrice[]){
@@ -24,12 +25,14 @@ export function groupByMonth(historicalPrices: RawHistoricalPrice[]){
         closeDate: current.date,
         high: current.high,
         low: current.low,
-        open: current.open
+        open: current.open,
+        volume: current.volume
       })
     } else {
       priceInfo.high = Math.max(priceInfo.high, current.high);
       priceInfo.low = Math.min(priceInfo.low, current.low);
       priceInfo.open = current.open
+      priceInfo.volume += current.volume
     }
     return acc;
   }, [] as MonthlyHistoricalPrice[])

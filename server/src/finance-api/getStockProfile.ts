@@ -1,44 +1,42 @@
 import client from "./client";
 
-export async function getStockProfile(ticker: string){
-  const response = await client.get<StockProfile>(`/api/v3/profile/${ticker}`);
-  return response.data
+export async function getStockProfile(ticker: string) {
+  const response = await client.get<StockProfile[]>(`/api/v3/profile/${ticker}`)
+  return response.data[0]
 }
 
-export interface StockProfile{
-	symbol: string;
-	country: string;
-	cusip: string;
-	cik: string;
-	mktCap: number;
-	city: string;
-	dcf: number;
-	companyName: string;
-	changes: number;
-	range: string;
-	description: string;
-	industry: string;
-	ceo: string;
-	volAvg: number;
-	price: number;
-	currency: string;
-	exchangeShortName: string;
-	state: string;
-	sector: string;
-	beta: number;
-	defaultImage: boolean;
-	zip: string;
-	image: string;
-	website: string;
-	address: string;
-	lastDiv: number;
-	dcfDiff: number;
-	isActivelyTrading: boolean;
-	isEtf: boolean;
-	fullTimeEmployees: string;
-	phone: string;
-	exchange: string;
-	isin: string;
-	ipoDate: string;
+interface StockProfile {
+  symbol: string
+  price: number
+  beta: number
+  volAvg: number
+  mktCap: number
+  lastDiv: number
+  range: string
+  changes: number
+  companyName: string
+  currency: string
+  cik: string
+  isin: string
+  cusip: string
+  exchange: string
+  exchangeShortName: string
+  industry: string
+  website: string
+  description: string | null
+  ceo: string
+  sector: string
+  country: string
+  fullTimeEmployees: string
+  phone: string
+  address: string
+  city: string
+  state: string
+  zip: string
+  dcfDiff: number
+  dcf: number
+  image: string
+  ipoDate: string
+  defaultImage: boolean
 }
 

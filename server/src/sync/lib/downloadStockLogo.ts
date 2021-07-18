@@ -1,7 +1,7 @@
 import axios from 'axios';
-import * as fs from 'fs'
-import * as crypto from 'crypto';
-
+import fs from 'fs'
+import crypto from 'crypto';
+import stream from 'stream'
 
 const DEFAULT_IMAGE_HASH = '64b13a165031c95f2de9aacb3b90057a'
 
@@ -18,29 +18,38 @@ function createHashFromStream(stream: fs.ReadStream){
 }
 
 export function downloadStockLogo(symbol: string, dir:string){
-  return new Promise(async (resolve, reject) => {
-    const file = fs.createWriteStream(dir);
+  try{
+    return new Promise(async (resolve, reject) => {
 
-    const response = await axios.get(
-      `https://storage.googleapis.com/iexcloud-hl37opg/api/logos/${symbol}.png`,
-      { responseType: 'stream' })
+      const response = await axios.get(
+        `https://storage.googleapis.com/iexcloud-hl37opg/api/logos/${symbol}.png`,
+        { responseType: 'stream' })
 
-    // @Todo stream 사용법에 대한 숙지가 필요
-    // const hash = await createHashFromStream(response.data)
-    // if(hash === DEFAULT_IMAGE_HASH){
-    //   const error = new Error('Logo image does not exist')
-    //   error.name = 'LogoImageNotFoundError'
-    //   reject(error)
-    //   return
-    // }
+      const hashStream = response.data.pipe(new stream.PassThrough())
+      const fileStream = response.data.pipe(new stream.PassThrough())
 
-    response.data.pipe(file);
-    file.on('close', () => {
-     resolve(true)
+      // @Todo stream 사용법에 대한 숙지가 필요
+      const hash = await createHashFromStream(hashStream)
+      if(hash === DEFAULT_IMAGE_HASH){
+        const error = new Error('Logo image does not exist')
+        error.name = 'LogoImageNotFoundError'
+        reject(error)
+        return
+      }
+
+      const file = fs.createWriteStream(dir)
+      fileStream.pipe(file)
+      file.on('error', (error) => {
+        reject(error)
+      })
+      file.on('close', () => {
+        resolve(true)
+      })
     })
-    file.on('error', (error) => {
-      reject(error)
-    })
-  })
+  } catch (e) {
+    e.name = 'downloadStockLogo'
+    console.log(e)
+  }
+
 }
 
