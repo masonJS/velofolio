@@ -28,6 +28,16 @@ class Syncbot {
     return tickers;
   }
 
+  async parseTickersAndNames(name: string){
+    const data = await fs.readFile(path.join(tickersDir, `${name}.txt`), 'utf8')
+    const lines = data.split('\n');
+    const tickersAndNames = lines
+      .map((line) => line.split('\t'))
+      .filter(ticker => !ticker.includes('.') && ticker)
+
+    return tickersAndNames;
+  }
+
   async loadTickers() {
     const tickers = await this.parseTickers('INITIAL')
     return tickers
@@ -105,6 +115,66 @@ class Syncbot {
 
     await getRepository(HistoricalPrice).save(historicalPrices)
     return asset
+  }
+
+  async registerAsset(ticker: string, name: string){
+    const asset = new Asset();
+    const assetType = await getRepository(AssetType).findOne({
+      where: {
+        type: 'U.S. Asset'
+      }
+    })
+
+    asset.name = name
+    asset.ticker = ticker
+    asset.asset_type = assetType
+    asset.description = ''
+    asset.sector = ''
+    asset.ipo_date = new Date()
+    asset.is_etf = false
+
+    await getRepository(Asset).save(asset)
+  }
+
+  async registerAssets(){
+    const AMEX = await this.parseTickersAndNames('AMEX')
+    const NASDAQ = await this.parseTickersAndNames('NASDAQ')
+    const nyse = await this.parseTickersAndNames('nyse')
+
+    const data = [...AMEX, ...NASDAQ, ...nyse]
+
+    const bar = new cliProgress.SingleBar(
+      {},
+      cliProgress.Presets.shades_classic
+    )
+
+    bar.start(data.length, 0)
+    let busyWorkers = 0
+    const failedTickers: string[] = []
+
+    while(data.length > 0 || busyWorkers !== 0){
+      if(busyWorkers >= LIMIT || data.length === 0){
+        await sleep(6)
+        continue
+      }
+      busyWorkers += 1
+      const ticker = data.pop()
+      console.log('START: ', busyWorkers)
+      this.registerAsset(ticker[0], ticker[1])
+        .catch((e) => {
+          console.log(e)
+          console.log(`Error: ${ticker}`)
+          // failedTickers.push(ticker)
+          // fs.appendFile(errorsDir, `${ticker}\n`, 'utf8')
+        })
+        .finally(() => {
+          busyWorkers -= 1
+          console.log('END: ', busyWorkers)
+          bar.increment(1)
+        })
+    }
+    console.log('FINISH')
+    bar.stop()
   }
 
   async syncStocks(){

@@ -6,8 +6,9 @@ import Syncbot from "./Syncbot";
 
 createConnection().then(async (connection) => {
   const syncbot = new Syncbot();
-  await syncbot.syncStock('AAMC')
+  // await syncbot.syncStock('AAMC')
   // await syncbot.syncStocks()
+  await syncbot.registerAssets()
   connection.close()
 })
 
