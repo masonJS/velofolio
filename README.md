@@ -6,7 +6,7 @@ The aim was to learn the technology stack that can be utilized, following the or
 
 ## Project Stack
 
-## Server 
+### Server 
 
 - TypeScript
 - Node.js
