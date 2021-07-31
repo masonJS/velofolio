@@ -13,3 +13,7 @@ The aim was to learn the technology stack that can be utilized, following the or
 - MariaDB
 - TypeORM
 - Fuse.js
+
+
+## Ref
+[velopolio repo](https://github.com/velopert/velofolio)
