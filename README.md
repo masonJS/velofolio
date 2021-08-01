@@ -1,10 +1,19 @@
-# veloplolio_by_copy
+# velopolio
 
-velopert님의 토이 프로젝트를 카피 코딩해보는 프로젝트 
+This project is copy project with velopolio.
+The aim was to learn the technology stack that can be utilized, following the original project.
 
 
-## Stack
+## Project Stack
+
+### Server 
+
 - TypeScript
 - Node.js
 - MariaDB
 - TypeORM
+- Fuse.js
+
+
+## Ref
+[velopolio repo](https://github.com/velopert/velofolio)
