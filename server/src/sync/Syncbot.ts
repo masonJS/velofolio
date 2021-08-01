@@ -1,8 +1,8 @@
 import * as fs from 'fs/promises'
 import * as path from 'path'
-import { getStockProfile } from "../finance-api/getStockProfile";
-import { getSectorWeightings } from "../finance-api/getSectorWeightings";
-import { getHistoricalPrices } from "../finance-api/getHistoricalPrices";
+import { getStockProfile } from "../lib/finance-api/getStockProfile";
+import { getSectorWeightings } from "../lib/finance-api/getSectorWeightings";
+import { getHistoricalPrices } from "../lib/finance-api/getHistoricalPrices";
 import { groupByMonth } from "./lib/groupByMonth";
 import { Asset } from "../entity/Asset";
 import { downloadStockLogo } from "./lib/downloadStockLogo";
