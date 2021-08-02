@@ -15,21 +15,21 @@ import { Backtest } from "./Backtest";
 })
 export class Comment {
   @PrimaryGeneratedColumn()
-  id: number
+  id!: number
 
   @ManyToOne(type => User)
   @JoinColumn({ name: 'user_id' })
-  user: User
+  user!: User
 
   @ManyToOne(type => Backtest)
   @JoinColumn({ name: 'backtest_id'})
-  backtest: Backtest
+  backtest!: Backtest
 
   @Column({ type: 'varchar', length: 512 })
-  comment: string
+  comment!: string
 
   @Index()
   @CreateDateColumn()
   @Column({ type: 'timestamp' })
-  created_at: Date
+  created_at!: Date
 }

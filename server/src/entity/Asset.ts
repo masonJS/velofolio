@@ -4,7 +4,7 @@ import {
   Column,
   OneToOne,
   ManyToOne,
-  JoinColumn
+  JoinColumn, Index
 } from 'typeorm'
 import { AssetMeta } from './AssetMeta'
 import { AssetType } from "./AssetType";
@@ -14,42 +14,43 @@ import { AssetType } from "./AssetType";
 })
 export class Asset{
   @PrimaryGeneratedColumn()
-  id: number
+  id!: number
 
+  @Index({ unique: true })
   @Column({
     type: "varchar",
     length: 10
   })
-  ticker: string
+  ticker!: string
 
   @Column({ length: 128 })
-  name: string
+  name!: string
 
   @Column({
     type: 'varchar',
     length: 4096
   })
-  description: string
+  description!: string
 
   @Column({ nullable: true })
-  sector: string
+  sector!: string
 
   @Column({ type: 'timestamp' })
-  ipo_date: Date
+  ipo_date!: Date
 
   @Column({ nullable: true })
-  image: string
+  image!: string
 
   @Column()
-  is_etf: boolean
+  is_etf!: boolean
 
   @OneToOne((type) => AssetMeta, (assetMeta) => assetMeta.asset)
-  asset_meta: AssetMeta
+  asset_meta!: AssetMeta
 
   @ManyToOne((type) => AssetType, { onDelete: 'CASCADE' })
   @JoinColumn({
     name: 'asset_type_id'
   })
-  asset_type: AssetType
+  asset_type!: AssetType
 
 }

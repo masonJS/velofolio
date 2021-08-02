@@ -6,7 +6,7 @@ const callback: FastifyPluginCallback = async (fastify, opts, done) => {
   fastify.decorate('something', () => {})
   const searchEngine = new SearchEngine()
   await searchEngine.initialize()
-  fastify.decorate('search', searchEngine)
+  fastify.decorate('searchEngine', searchEngine)
   done()
 }
 

@@ -15,7 +15,7 @@ import cliProgress from 'cli-progress';
 
 const tickersDir = path.resolve(__dirname, 'tickers')
 const LIMIT = 5
-const sleep = (duration) => new Promise((resolve) => setTimeout(resolve, duration, []))
+const sleep = (duration: number) => new Promise((resolve) => setTimeout(resolve, duration, []))
 
 class Syncbot {
   async parseTickers(name: string){
@@ -59,11 +59,11 @@ class Syncbot {
     const monthlyHistoricalPrices = groupByMonth(rawHistoricalPrices)
     const asset = new Asset()
     asset.name = profile.companyName
-    asset.description = profile.description
-    asset.asset_type = assetType
+    asset.description = profile.description!
+    asset.asset_type = assetType!
     asset.ipo_date = new Date(profile.ipoDate)
     asset.is_etf = profile.sector === ''
-    asset.sector = profile.sector || null
+    asset.sector = profile.sector || ''
     asset.ticker = ticker
 
     try{
@@ -127,7 +127,7 @@ class Syncbot {
 
     asset.name = name
     asset.ticker = ticker
-    asset.asset_type = assetType
+    asset.asset_type = assetType!
     asset.description = ''
     asset.sector = ''
     asset.ipo_date = new Date()
@@ -160,7 +160,7 @@ class Syncbot {
       busyWorkers += 1
       const ticker = data.pop()
       console.log('START: ', busyWorkers)
-      this.registerAsset(ticker[0], ticker[1])
+      this.registerAsset(ticker![0], ticker![1])
         .catch((e) => {
           console.log(e)
           console.log(`Error: ${ticker}`)
@@ -197,17 +197,17 @@ class Syncbot {
       }
       busyWorkers += 1
       const ticker = tickers.pop()
-      console.log('START: ', busyWorkers)
+      // console.log('START: ', busyWorkers)
       this.syncStock(ticker!)
         .catch((e) => {
           console.log(e)
           console.log(`Error: ${ticker}`)
-          failedTickers.push(ticker)
+          failedTickers.push(ticker!)
           fs.appendFile(errorsDir, `${ticker}\n`, 'utf8')
         })
         .finally(() => {
           busyWorkers -= 1
-          console.log('END: ', busyWorkers)
+          // console.log('END: ', busyWorkers)
           bar.increment(1)
       })
     }

@@ -7,12 +7,12 @@ declare module 'fastify' {
 }
 
 // /src/type/index.d.ts
-declare module 'myModule' {
-  export namespace myNamespace {
-    type Foo = string;
-    interface Bar { baz: number; }
-  }
-}
+// declare module 'myModule' {
+//   export namespace myNamespace {
+//     type Foo = string;
+//     interface Bar { baz: number; }
+//   }
+// }
 
 //
 // import { myNamespace } from 'myModule'

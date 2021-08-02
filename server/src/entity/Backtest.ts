@@ -16,28 +16,28 @@ import { Asset } from "./Asset";
 })
 export class Backtest {
   @PrimaryGeneratedColumn()
-  id: number
+  id!: number
 
   @Column()
-  title: string
+  title!: string
 
   @Column({ type: 'text' })
-  body: string
+  body!: string
 
   @Index()
   @CreateDateColumn()
   @Column({ type: 'timestamp' })
-  created_at: Date
+  created_at!: Date
 
   @Column({ type: 'text' })
-  options: string
+  options!: string
 
   @Column()
-  is_certified: boolean
+  is_certified!: boolean
 
   @ManyToOne(type => User)
   @JoinColumn({ name: 'user_id'})
-  user: User
+  user!: User
 
   @ManyToMany(type => Asset)
   @JoinTable({
@@ -51,5 +51,5 @@ export class Backtest {
       referencedColumnName: 'id'
     }
   })
-  asset: Asset[]
+  asset!: Asset[]
 }

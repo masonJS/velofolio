@@ -12,16 +12,16 @@ import { Asset } from "./Asset";
 })
 export class SectorWeighting {
   @PrimaryGeneratedColumn()
-  id: number
+  id!: number
 
   @ManyToOne(type => Asset, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'asset_id' })
-  asset: Asset
+  asset!: Asset
 
   @Column()
-  sector: string
+  sector!: string
 
   @Column({ type: 'double' })
-  percentage: number
+  percentage!: number
 }
 

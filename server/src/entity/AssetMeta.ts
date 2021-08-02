@@ -12,22 +12,22 @@ import { Asset } from './Asset'
 })
 export class AssetMeta {
   @PrimaryGeneratedColumn()
-  id: number
+  id!: number
 
   @Column({ type: 'double' })
-  price: number
+  price!: number
 
   @Column({ type: 'double' })
-  market_cap: number
+  market_cap!: number
 
   @Column()
-  is_tracking: boolean
+  is_tracking!: boolean
 
   @OneToOne((type) => Asset, (asset) => asset.asset_meta, { onDelete: 'CASCADE', cascade: true })
   @JoinColumn({ name: 'asset_id'})
-  asset: Asset
+  asset!: Asset
 
   @Index()
   @Column({ type: 'double' })
-  changes: number
+  changes!: number
 }
