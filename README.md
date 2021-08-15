@@ -1,6 +1,6 @@
-# velopolio
+# velofolio
 
-This project is copy project with velopolio.
+This project is copy project with velofolio.
 The aim was to learn the technology stack that can be utilized, following the original project.
 
 
@@ -16,4 +16,4 @@ The aim was to learn the technology stack that can be utilized, following the or
 
 
 ## Ref
-[velopolio repo](https://github.com/velopert/velofolio)
+[velofolio repo](https://github.com/velopert/velofolio)
